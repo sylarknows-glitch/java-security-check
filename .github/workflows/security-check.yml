@@ -26,8 +26,8 @@ jobs:
           path: ~/.dependency-check
           key: dependency-check-cache
 
-      - name: Run Dependency-Check Scan
-        uses: OWASP/dependency-check-action@v1
+      - name: Run OWASP Dependency Check
+        uses: jeremylong/gh-dependency-check-action@v0.1.0
         with:
           project: "JavaSecurityCheck"
           path: "."
