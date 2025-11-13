@@ -26,17 +26,14 @@ jobs:
           path: ~/.dependency-check
           key: dependency-check-cache
 
-      - name: Create report directory
-        run: mkdir -p report
-
       - name: Run Dependency-Check Scan
-        uses: dependency-check/Dependency-Check-Action@v4
+        uses: OWASP/dependency-check-action@v1
         with:
-          project: 'JavaSecurityCheck'
-          scanPath: '.'
-          format: 'HTML'
-          outPath: 'report'
-          arguments: '--disableAssembly -v'
+          project: "JavaSecurityCheck"
+          path: "."
+          format: "HTML"
+          out: "report"
+          args: "--disableAssembly -v"
 
       - name: Upload Security Report
         uses: actions/upload-artifact@v4
