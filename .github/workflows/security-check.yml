@@ -12,28 +12,24 @@ on:
 # A workflow run is made up of one or more jobs
 jobs:
   security:
+    # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
+    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so the job can access it.
       - name: Checkout code
         uses: actions/checkout@v4
 
+      # Sets up the specified Java Development Kit (JDK)
       - name: Set up JDK 11
         uses: actions/setup-java@v4
         with:
           distribution: 'adopt'
           java-version: '11'
-          # Add caching for Maven dependencies (if you use Maven)
-          cache: 'maven' 
 
-      # NEW STEP: Install a build tool like Maven if you don't already have one
-      - name: Setup Maven
-        uses: stCarsten/setup-maven@v2 
-
-      # CRITICAL NEW STEP: Build your project so dependencies are resolved
-      - name: Build Project with Maven
-        run: mvn package -DskipTests
-
+      # Run OWASP Dependency-Check Scan
+      # Uses the officially provided action for a cleaner setup
       - name: Run Dependency-Check Scan
         uses: dependency-check/Dependency-Check-Action@v3
         with:
@@ -41,11 +37,13 @@ jobs:
           scanPath: '.'
           format: 'HTML'
           outPath: 'report'
-          arguments: '--disableAssembly -v'
+          # Use arguments for any additional flags
+          arguments: '--disableAssembly -v' 
 
+      # Uploads the security report artifact so it can be downloaded later
       - name: Upload Security Report
         uses: actions/upload-artifact@v4
         with:
           name: security-report
-          path: report/*
+          path: report/* # Include all files in the report directory
           retention-days: 7
