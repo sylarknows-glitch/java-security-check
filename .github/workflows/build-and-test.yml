@@ -1,13 +1,13 @@
 name: Build and Test
 on:
- push:
- branches: [ main ]
+  push:
+    branches: [ main ]
 jobs:
- build-and-test:
- runs-on: ubuntu-latest
- steps:
- - uses: actions/checkout@v4
- - name: Build (demo)
- run: echo "Build step ran."
- - name: Test (demo)
- run: echo "Tests passed."
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Build (demo)
+      run: echo "Build step ran."
+    - name: Test (demo)
+      run: echo "Tests passed."
